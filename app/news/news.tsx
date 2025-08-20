@@ -3,6 +3,7 @@ import React from 'react';
 import Image from "next/image";
 import useNews from "@/hooks/useNews";
 import {Props} from "@/type/categoty-type";
+import {TrendingHeadlines} from "@/app/news/trending-headlines";
 
 const News: React.FC<Props> = ({selectedCategory}: Props) => {
     const articles = useNews(selectedCategory)
@@ -55,7 +56,6 @@ const News: React.FC<Props> = ({selectedCategory}: Props) => {
                     </ul>
                 </div>
             </div>
-
         </div>
     );
 };

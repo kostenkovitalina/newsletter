@@ -1,13 +1,13 @@
-import { act, render, screen } from "@testing-library/react";
-import { RealTimeClock } from "@/app/(marketing)/real-time-clock";
+import {act, render, screen} from "@testing-library/react";
+import {RealTimeClock} from "@/app/(marketing)/real-time-clock";
 
 jest.useFakeTimers()
 
 test("real-time clock renders current time", () => {
-    let initialText = '';
+    let initialText = '12:00';
 
     act(() => {
-        render(<RealTimeClock />);
+        render(<RealTimeClock/>);
     });
 
     const initialTime = screen.getByText(/^\d{2}:\d{2}$/)
@@ -22,3 +22,15 @@ test("real-time clock renders current time", () => {
     expect(updatedTime).toBeInTheDocument()
     expect(updatedTime.textContent).not.toBe(initialText)
 });
+
+test('real-time clock update', () => {
+    act(() => {
+        render(<RealTimeClock/>)
+    });
+
+    screen.debug();
+
+    act(() => jest.advanceTimersByTime(60_000));
+
+    screen.debug();
+})

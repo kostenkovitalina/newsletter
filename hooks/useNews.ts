@@ -29,7 +29,8 @@ const useNews = (category: Category = 'general') => {
                 const res = await fetch(url, {signal: controller.signal});
                 const data = await res.json();
                 setArticles(data.articles || []);
-            } catch (err) {
+            } catch (err: any) {
+                if (err.name === 'AbortError') return;
                 console.error('Fetch error:', err);
             }
         };

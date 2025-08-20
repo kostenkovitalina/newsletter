@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
-import {Header} from "@/app/(marketing)/header";
 import {NewsPage} from "@/app/news/news-page";
+import Page from "@/app/search/page";
 
 export default function Home() {
     return (
