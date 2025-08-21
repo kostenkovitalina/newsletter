@@ -13,6 +13,7 @@ export type Article = {
     description?: string;
     urlToImage: string;
     content?: string;
+    publishedAt?: string
 };
 
 const useNews = (category: Category = 'general') => {
