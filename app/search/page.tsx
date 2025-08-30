@@ -1,30 +1,22 @@
 'use client'
-import React, {useState} from 'react';
+import React from 'react';
 import {useSearch} from "@/hooks/useSearch";
 import {Pagination} from "@mui/material";
+import {useRouter} from "next/navigation";
+import {PaginationPage} from "@/app/(components)/pagination/pagitanion-page";
 
 export default function Page() {
     const {news, query, loading, error} = useSearch();
-    const [currentPage, setCurrentPage] = useState(1)
-
-    const pageSize = 20
-    const totalResult = news.length
-    const pageCount = Math.ceil(totalResult / pageSize)
 
     if (loading) return <p className="text-center mt-10">Loading...</p>;
     if (error) return <p className="text-center mt-10">Error: {error}</p>
     if (news.length === 0) return <p className="text-center mt-10">No results found "{query}".</p>;
 
-    const displayedNews = news.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    )
-
     return (
         <div className="max-w-3xl mx-auto mt-10 space-y-6">
             <h1 className="text-2xl font-bold">Search Results</h1>
-
-            {displayedNews.map((article: any, index: number) => (
+            <PaginationPage/>
+            {news.map((article: any, index: number) => (
                 <div
                     key={index}
                     className="p-4 rounded-lg shadow bg-white"
@@ -41,12 +33,8 @@ export default function Page() {
                     </a>
                 </div>
             ))}
-
-            <Pagination
-                count={pageCount}
-                color="primary"
-                onChange={(event, page) => setCurrentPage(page)}
-            />
+            <PaginationPage/>
         </div>
     );
 }
+

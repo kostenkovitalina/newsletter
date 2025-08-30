@@ -8,14 +8,15 @@ export type Article = {
     description?: string;
     url: string;
     pageSize?: number;
+    totalResults?: number
 };
 
 export const useSearch = () => {
     const [news, setNews] = useState<Article[]>([]);
     const searchParams = useSearchParams();
     const [loading, setLoading] = useState(false)
-    // const [page, setPage] = useState(1)
-    // const [totalResult, setTotalResult] = useState()
+    const [totalResult, setTotalResult] = useState(0)
+
     const [error, setError] = useState(null)
     const query = searchParams.get("query") || "";
     const page = searchParams.get('page') || 1
@@ -27,6 +28,7 @@ export const useSearch = () => {
 
         if (!query) {
             setNews([]);
+            setTotalResult(0)
             return;
         }
 
@@ -39,6 +41,7 @@ export const useSearch = () => {
                 const res = await fetch(url, {signal: controller.signal});
                 const data = await res.json();
                 setNews(data.articles || []);
+                setTotalResult(data.totalResults  || 0)
 
                 if(!res.ok || data.status === 'error'){
                     // throw new Error(data.message)
@@ -60,8 +63,9 @@ export const useSearch = () => {
             controller.abort();
         };
 
-    }, [query]);
+    }, [query, page]);
 
-    return {news, query, loading, error, page}
+    return {news, query, loading, error, page, totalResult}
 };
 
+//Todo: add useState totalResult and in if/else add setTotalResult 0 || data.totalResult ||. and in if(!query) add setTotalResult 0
