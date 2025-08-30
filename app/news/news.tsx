@@ -1,6 +1,5 @@
 'use client'
 import React from 'react';
-import Image from "next/image";
 import useNews, {Article} from "@/hooks/useNews";
 import {Props} from "@/type/categoty-type";
 
@@ -37,18 +36,13 @@ const News: React.FC<Props> = ({selectedCategory, articles: propsArticles}) => {
                     <div className='grid grid-cols-2 gap-4'>
                         {result.map((article, index) => (
                             <div key={index} className="relative w-[390px] h-[340px]">
-                                {article.urlToImage ? (
+                                {article.urlToImage && (
                                     <img
                                         src={article.urlToImage}
                                         alt={article.title}
                                         className="w-full h-full object-cover"
                                     />
-                                ) : (
-                                    <div>
-                                        {/*Todo 2 image and 2 description without image*/}
-                                    </div>
                                 )}
-
                                 <div className="absolute top-0 left-0 right-0 bg-opacity-60 text-white p-3">
                                     <h3 className="text-base font-semibold line-clamp-2" style={{fontSize: 24}}>
                                         {article.title}
@@ -58,23 +52,6 @@ const News: React.FC<Props> = ({selectedCategory, articles: propsArticles}) => {
                             </div>
                         ))}
                     </div>
-                    {/*<ul>*/}
-                    {/*    {result.map((article) => (*/}
-                    {/*        <li key={article.url}>*/}
-                    {/*            <strong>{article.title}</strong><br/>*/}
-                    {/*            <small>{article.source?.name}</small>*/}
-                    {/*            {article.urlToImage && (*/}
-                    {/*                <Image*/}
-                    {/*                    src={article.urlToImage}*/}
-                    {/*                    width={100}*/}
-                    {/*                    height={100}*/}
-                    {/*                    alt={'news image'}*/}
-                    {/*                    unoptimized*/}
-                    {/*                />*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*    ))}*/}
-                    {/*</ul>*/}
                 </div>
             </div>
         </div>

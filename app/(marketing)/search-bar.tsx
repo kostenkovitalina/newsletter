@@ -14,6 +14,7 @@ export const SearchBar = () => {
     return (
         <div className="w-full max-w-[630px] w-auto flex items-center">
             <input
+                data-testid="search-bar"
                 className='flex-grow min-w-[50px] h-[50px] px-4 border-none
                 bg-[#04594D] text-[#F7F7F4] outline-none'
                 type="search"

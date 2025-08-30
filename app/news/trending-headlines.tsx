@@ -15,13 +15,7 @@ export const TrendingHeadlines: React.FC<Props> = ({selectedCategory}) => {
             </div>
 
             <div>
-                {/*<ul>*/}
-                {/*    {articles.map((article) => (*/}
-                {/*        <li>*/}
-
-                {/*        </li>*/}
-                {/*    ))}*/}
-                {/*</ul>*/}
+              {/*Todo: sort by popularity*/}
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import { URLSearchParams } from 'url';
 jest.mock('next/navigation', () => ({
     useSearchParams: jest.fn(),
 }));
+
 describe('useSearch', () => {
     (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams("query=test"));
 

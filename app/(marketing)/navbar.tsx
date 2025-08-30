@@ -1,6 +1,6 @@
 import React from 'react';
 import {RealTimeClock} from "@/app/(marketing)/real-time-clock";
-import {categories, Category} from "@/constanta/categories";
+import {categories, Category} from "@/constants/categories";
 
 type Props = {
     onCategoryChange: (category: Category) => void;

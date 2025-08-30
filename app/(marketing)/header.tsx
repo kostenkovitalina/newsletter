@@ -1,7 +1,7 @@
 import React from 'react';
 import {SearchBar} from "@/app/(marketing)/search-bar";
 import {Navbar} from "@/app/(marketing)/navbar";
-import {Category} from "@/constanta/categories";
+import {Category} from "@/constants/categories";
 
 type Props = {
     onCategoryChange: (category: Category) => void;
@@ -21,7 +21,7 @@ export const Header = ({onCategoryChange}: Props) => {
                 </div>
                 <div
                     className='-mt-6'
-                    data-testid="navbar-wrapper">
+                    data-testid="navbar">
                     <Navbar onCategoryChange={onCategoryChange}/>
                 </div>
             </div>
