@@ -20,7 +20,7 @@ export const NewsPage = () => {
                 </div>
 
                 <div className="w-1/3">
-                    <TrendingHeadlines selectedCategory={selectedCategory}/>
+                    <TrendingHeadlines sortBy='popularity'/>
                 </div>
             </div>
         </div>

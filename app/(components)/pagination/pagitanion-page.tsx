@@ -1,3 +1,4 @@
+'use client'
 import {useRouter} from "next/navigation";
 import {useSearch} from "@/hooks/useSearch";
 import {Pagination} from "@mui/material";

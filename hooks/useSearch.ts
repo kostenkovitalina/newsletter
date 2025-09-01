@@ -6,13 +6,14 @@ import {ArticleType} from "@/type/article-type";
 
 export const useSearch = () => {
     const [news, setNews] = useState<ArticleType[]>([]);
-    const searchParams = useSearchParams();
     const [loading, setLoading] = useState(false)
     const [totalResult, setTotalResult] = useState(0)
-
     const [error, setError] = useState(null)
-    const query = searchParams.get("query") || "";
-    const page = searchParams.get('page') || 1
+
+    const searchParams = typeof window !== "undefined" ? useSearchParams() : null;
+
+    const query = searchParams?.get("query") || "";
+    const page = searchParams?.get('page') || 1
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY
 
@@ -60,5 +61,3 @@ export const useSearch = () => {
 
     return {news, query, loading, error, page, totalResult}
 };
-
-//Todo: add useState totalResult and in if/else add setTotalResult 0 || data.totalResult ||. and in if(!query) add setTotalResult 0

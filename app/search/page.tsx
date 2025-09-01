@@ -3,7 +3,9 @@ import React from 'react';
 import {useSearch} from "@/hooks/useSearch";
 import {PaginationPage} from "@/app/(components)/pagination/pagitanion-page";
 
-export default function Page() {
+export const dynamic = "force-dynamic";
+
+ function Page() {
     const {news, query, loading, error} = useSearch();
 
     if (loading) return <p className="text-center mt-10">Loading...</p>;
@@ -36,3 +38,4 @@ export default function Page() {
     );
 }
 
+export default Page
