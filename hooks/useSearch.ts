@@ -1,18 +1,11 @@
 'use client'
 import {useEffect, useState} from 'react';
 import {useSearchParams} from "next/navigation";
+import {ArticleType} from "@/type/article-type";
 
-export type Article = {
-    title: string;
-    author?: string;
-    description?: string;
-    url: string;
-    pageSize?: number;
-    totalResults?: number
-};
 
 export const useSearch = () => {
-    const [news, setNews] = useState<Article[]>([]);
+    const [news, setNews] = useState<ArticleType[]>([]);
     const searchParams = useSearchParams();
     const [loading, setLoading] = useState(false)
     const [totalResult, setTotalResult] = useState(0)

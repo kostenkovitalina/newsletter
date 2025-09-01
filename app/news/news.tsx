@@ -1,9 +1,10 @@
 'use client'
 import React from 'react';
-import useNews, {Article} from "@/hooks/useNews";
-import {Props} from "@/type/categoty-type";
+import useNews from "@/hooks/useNews";
+import {CategoryType} from "@/type/category-type";
+import {ArticleType} from "@/type/article-type";
 
-const News: React.FC<Props> = ({selectedCategory, articles: propsArticles}) => {
+const News: React.FC<CategoryType> = ({selectedCategory}) => {
     const articles = useNews(selectedCategory);
 
     const firstTwoNews = articles.filter(article => article.urlToImage).slice(0, 2)
@@ -11,7 +12,7 @@ const News: React.FC<Props> = ({selectedCategory, articles: propsArticles}) => {
     const withImage = articles.filter(a => a.urlToImage)
     const withoutImage = articles.filter(a => !a.urlToImage)
 
-    let result: Article[] = []
+    let result: ArticleType[] = []
     let i = 0, j = 0;
 
     while (i < withImage.length || j < withoutImage.length) {

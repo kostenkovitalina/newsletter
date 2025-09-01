@@ -2,8 +2,9 @@
 import {useEffect, useState} from "react";
 import {Category} from "@/constants/categories";
 import {ArticleType} from "@/type/article-type";
+import {SortBy} from "@/constants/sortBy";
 
-const useNews = (category: Category = 'general') => {
+const useSortByNews = (sortBy: SortBy = 'publishedAt') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY
@@ -11,7 +12,7 @@ const useNews = (category: Category = 'general') => {
     useEffect(() => {
         const controller = new AbortController();
         const fetchNews = async () => {
-            const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`;
+            const url = `https://newsapi.org/v2/everything?q=bitcoin&sortBy=${sortBy}&apiKey=${apiKey}`;
 
             try {
                 const res = await fetch(url, {signal: controller.signal});
@@ -28,9 +29,9 @@ const useNews = (category: Category = 'general') => {
         return () => {
             controller.abort();
         };
-    }, [category]);
+    }, [sortBy]);
 
     return articles
 }
 
-export default useNews
+export default useSortByNews

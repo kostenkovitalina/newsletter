@@ -3,9 +3,9 @@ import React from 'react';
 import useNews from "@/hooks/useNews";
 import Image from "next/image";
 import CustomSlider from "@/app/(components)/slider/custom-slider";
-import {Props} from "@/type/categoty-type";
+import {CategoryType} from "@/type/category-type";
 
-export const TopNews: React.FC<Props> = ({selectedCategory}) => {
+export const TopNews: React.FC<CategoryType> = ({selectedCategory}) => {
     const articles = useNews(selectedCategory);
 
     const imageSlider = articles.filter(article => article.urlToImage).slice(10, 15);

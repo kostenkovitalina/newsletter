@@ -1,8 +1,6 @@
 'use client'
 import React from 'react';
 import {useSearch} from "@/hooks/useSearch";
-import {Pagination} from "@mui/material";
-import {useRouter} from "next/navigation";
 import {PaginationPage} from "@/app/(components)/pagination/pagitanion-page";
 
 export default function Page() {
