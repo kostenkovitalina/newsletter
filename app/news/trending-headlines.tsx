@@ -1,10 +1,10 @@
 import React from 'react';
-import {SortByType} from "@/type/sortBy-type";
-import useSortByNews from "@/hooks/useSortByNews";
+import {SortedType} from "@/type/sorted-type";
 import {NewsPublisher} from "@/app/(components)/news-publisher/news-publisher";
+import useTrendingHeadlineNews from "@/hooks/useTrendingHeadlineNews";
 
-export const TrendingHeadlines: React.FC<SortByType> = ({sortBy}) => {
-    const articles = useSortByNews(sortBy)
+export const TrendingHeadlines: React.FC<SortedType> = ({sortBy}) => {
+    const articles = useTrendingHeadlineNews(sortBy)
 
     const articlesToShow =  articles.filter(article => article.urlToImage).slice(0, 30)
 

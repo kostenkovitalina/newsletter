@@ -1,12 +1,15 @@
 'use client'
 import React from 'react';
-import useNews from "@/hooks/useNews";
 import Image from "next/image";
 import CustomSlider from "@/app/(components)/slider/custom-slider";
 import {CategoryType} from "@/type/category-type";
+import {SortedType} from "@/type/sorted-type";
+import useSortedNews from "@/hooks/useSortedNews";
 
-export const TopNews: React.FC<CategoryType> = ({selectedCategory}) => {
-    const articles = useNews(selectedCategory);
+type ModeType = CategoryType & SortedType
+
+export const TopNews: React.FC<ModeType> = ({selectedCategory, sortBy}) => {
+    const articles = useSortedNews(sortBy, selectedCategory)
 
     const imageSlider = articles.filter(article => article.urlToImage).slice(10, 15);
     const first = articles[0];
@@ -41,7 +44,7 @@ export const TopNews: React.FC<CategoryType> = ({selectedCategory}) => {
                 </div>
 
                 {first && (
-                    <div className="min-h-[140px] overflow-hidden" style={{ marginLeft: 10}}>
+                    <div className="min-h-[140px] overflow-hidden" style={{marginLeft: 10}}>
                         <h2 className="text-base font-bold mb-2"
                             style={{fontSize: 20}}>{first.title}</h2>
                         <p style={{fontSize: 10}}>{first.author}</p>
@@ -90,7 +93,7 @@ export const TopNews: React.FC<CategoryType> = ({selectedCategory}) => {
                 )}
 
                 {third && (
-                    <div className="min-h-[209px] overflow-hidden bg-white" style={{ marginLeft: 10}}>
+                    <div className="min-h-[209px] overflow-hidden bg-white" style={{marginLeft: 10}}>
                         <h2 className="text-base font-bold mb-1" style={{fontSize: 20}}>{third.title}</h2>
                         <p style={{fontSize: 10}}>{third.author}</p>
                         <div className='flex'>

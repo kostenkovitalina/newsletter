@@ -1,10 +1,9 @@
 'use client'
 import {useEffect, useState} from "react";
-import {Category} from "@/constants/categories";
 import {ArticleType} from "@/type/article-type";
 import {SortBy} from "@/constants/sortBy";
 
-const useSortByNews = (sortBy: SortBy = 'publishedAt') => {
+const useTrendingHeadlineNews = (sortBy: SortBy = 'publishedAt') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
 
     const apiKey = process.env.NEXT_PUBLIC_API_KEY
@@ -34,4 +33,4 @@ const useSortByNews = (sortBy: SortBy = 'publishedAt') => {
     return articles
 }
 
-export default useSortByNews
+export default useTrendingHeadlineNews
