@@ -13,7 +13,7 @@ export const useSearch = () => {
     const [query, setQuery] = useState("");
     const [page, setPage] = useState(1);
 
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY
+    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -31,7 +31,7 @@ export const useSearch = () => {
             }
 
             const searchNews = async () => {
-                const url = `https://newsapi.org/v2/everything?q=${query}&page=${page}&search=title,content&apiKey=${apiKey}`;
+                const url = `https://newsapi.org/v2/everything?q=${query}&page=${page}&search=title,content&apiKey=${NEWS_API_KEY}`;
 
                 try {
                     setLoading(true)

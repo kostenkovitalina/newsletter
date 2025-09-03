@@ -6,12 +6,12 @@ import {ArticleType} from "@/type/article-type";
 const useNews = (category: Category = 'general') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
 
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY
+    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY
 
     useEffect(() => {
         const controller = new AbortController();
         const fetchNews = async () => {
-            const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`;
+            const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${NEWS_API_KEY}`;
 
             try {
                 const res = await fetch(url, {signal: controller.signal});

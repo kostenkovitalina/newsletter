@@ -7,14 +7,14 @@ import { SortBy } from "@/constants/sortBy";
 
 const useSortedNews = (sortBy: SortBy = 'publishedAt', category: Category = 'general') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY as string;
+    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY as string;
 
     useEffect(() => {
         const controller = new AbortController();
 
         const run = async () => {
             try {
-                const srcUrl = new URL(`https://newsapi.org/v2/top-headlines/sources?apiKey=${apiKey}`);
+                const srcUrl = new URL(`https://newsapi.org/v2/top-headlines/sources?apiKey=${NEWS_API_KEY}`);
                 if (category) srcUrl.searchParams.set('category', category);
 
                 const srcRes = await fetch(srcUrl, { signal: controller.signal });
@@ -30,7 +30,7 @@ const useSortedNews = (sortBy: SortBy = 'publishedAt', category: Category = 'gen
 
                 const idsCsv = ids.slice(0, 20).join(',');
 
-                const evUrl = new URL(`https://newsapi.org/v2/everything?apiKey=${apiKey}&sources=${idsCsv}&sortBy=${sortBy}&pageSize=100`);
+                const evUrl = new URL(`https://newsapi.org/v2/everything?apiKey=${NEWS_API_KEY}&sources=${idsCsv}&sortBy=${sortBy}&pageSize=100`);
 
                 const evRes = await fetch(evUrl, { signal: controller.signal });
                 const evJson = await evRes.json();
@@ -53,7 +53,7 @@ const useSortedNews = (sortBy: SortBy = 'publishedAt', category: Category = 'gen
 
         run();
         return () => controller.abort();
-    }, [sortBy, category, apiKey]);
+    }, [sortBy, category, NEWS_API_KEY]);
 
     return articles;
 };
