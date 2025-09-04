@@ -1,8 +1,13 @@
 import React from "react";
 import {ArticleType} from "@/type/article-type";
 
+type Props = {
+    className?: string
+}
 
-export const NewsPublisher: React.FC<ArticleType> = ({ publishedAt }) => {
+type Mode = ArticleType & Props
+
+export const NewsPublisher: React.FC<Mode> = ({ publishedAt, className }) => {
     if (!publishedAt) return null;
 
     const date = new Date(publishedAt);
@@ -12,5 +17,5 @@ export const NewsPublisher: React.FC<ArticleType> = ({ publishedAt }) => {
         year: "numeric",
     });
 
-    return <div className="text-xs text-gray-400">{formattedDate}</div>;
+    return <div className={`text-xs ${className}`}>{formattedDate}</div>;
 };

@@ -52,7 +52,7 @@ function Page() {
                                 ) :
                                 <div className='bg-[#F3F2EA]'>
                                     <h2 className='text-xl'>{article.title}</h2>
-                                    <div className='flex flex-col gap-4'>
+                                    <div className='flex flex-col'>
                                         <p className='text-xs'>{article.author}</p>
                                         <NewsPublisher publishedAt={article.publishedAt}/>
                                     </div>

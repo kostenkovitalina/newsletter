@@ -1,18 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {SortedType} from "@/type/sorted-type";
 import {NewsPublisher} from "@/app/(components)/news-publisher/news-publisher";
 import useTrendingHeadlineNews from "@/hooks/useTrendingHeadlineNews";
-import {useRouter} from "next/navigation";
 import Link from 'next/link';
 
 export const TrendingHeadlines: React.FC<SortedType> = ({sortBy}) => {
-    const router = useRouter()
     const articles = useTrendingHeadlineNews(sortBy)
-
-    const handleClick = (term: string) => {
-        if(!term) return
-        router.push(`/trending-headline`)
-    }
 
     const articlesToShow =  articles.filter(article => article.urlToImage).slice(0, 30)
 
@@ -40,7 +33,9 @@ export const TrendingHeadlines: React.FC<SortedType> = ({sortBy}) => {
                             <h3 className='text-sm text-[#04594D]'>{article.title}</h3>
                             <div className='flex text-xs gap-4'>
                                 <p>{article.author}</p>
-                                <NewsPublisher publishedAt={article.publishedAt}/>
+                                <NewsPublisher
+                                    className='text-gray-400'
+                                    publishedAt={article.publishedAt}/>
                             </div>
                         </div>
                     </div>
