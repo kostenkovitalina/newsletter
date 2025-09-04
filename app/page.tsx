@@ -5,7 +5,7 @@ import Page from "@/app/search/page";
 
 export default function Home() {
     return (
-        <div className='bg-[#F3F2EA]'>
+        <div>
             <NewsPage/>
         </div>
     );

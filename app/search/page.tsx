@@ -2,10 +2,14 @@
 import React from 'react';
 import {useSearch} from "@/hooks/useSearch";
 import {PaginationPage} from "@/app/(components)/pagination/pagitanion-page";
+import {NewsCards} from "@/app/(components)/news-cards/news-cards";
+import {NewsContainer} from "@/app/(components)/container/news-container";
+import {Header} from "@/app/(marketing)/header";
+import {NewsPublisher} from "@/app/(components)/news-publisher/news-publisher";
 
 export const dynamic = "force-dynamic";
 
- function Page() {
+function Page() {
     const {news, query, loading, error} = useSearch();
 
     if (loading) return <p className="text-center mt-10">Loading...</p>;
@@ -13,28 +17,57 @@ export const dynamic = "force-dynamic";
     if (news.length === 0) return <p className="text-center mt-10">No results found "{query}".</p>;
 
     return (
-        <div className="max-w-3xl mx-auto mt-10 space-y-6">
-            <h1 className="text-2xl font-bold">Search Results</h1>
-            <PaginationPage/>
-            {news.map((article: any, index: number) => (
-                <div
-                    key={index}
-                    className="p-4 rounded-lg shadow bg-white"
-                >
-                    <h2 className="text-lg font-semibold">{article.title}</h2>
-                    <p className="text-sm text-gray-600">{article.author}</p>
-                    <p className="mt-2">{article.description}</p>
-                    <a
-                        href={article.url}
-                        target="_blank"
-                        className="text-blue-600 hover:underline mt-2 block"
-                    >
-                        Read more →
-                    </a>
+        <>
+            <Header/>
+            <div className="w-full h-full max-w-[1000px] -mt-[200px] mx-auto bg-white font-serif">
+                <div>
+                    <h1 className="text-2xl pt-10 pl-6">Search Results '{query}'</h1>
                 </div>
-            ))}
-            <PaginationPage/>
-        </div>
+                <div className='justify-items-center p-5'>
+                    <PaginationPage/>
+                </div>
+                <NewsContainer className="grid grid-cols-3 gap-3 p-6 justify-items-center">
+                    {news.map((article: any) => (
+                        <NewsCards key={article.url} className="relative mb-5 w-full h-64 overflow-hidden shadow">
+                            {article.urlToImage ? (
+                                    <>
+                                        <img
+                                            src={article.urlToImage}
+                                            alt=''
+                                            className="w-full h-full object-cover"
+                                            width={270}
+                                            height={270}
+                                        />
+                                        <div
+                                            className='absolute top-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3'>
+                                            <h2 className="text-lg line-clamp-2">
+                                                {article.title}
+                                            </h2>
+                                            <div className='flex flex-col gap-4'>
+                                                <p className='text-xs'>{article.author}</p>
+                                                <NewsPublisher publishedAt={article.publishedAt}/>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) :
+                                <div className='bg-[#F3F2EA]'>
+                                    <h2 className='text-xl'>{article.title}</h2>
+                                    <div className='flex flex-col gap-4'>
+                                        <p className='text-xs'>{article.author}</p>
+                                        <NewsPublisher publishedAt={article.publishedAt}/>
+                                    </div>
+                                    <br/>
+                                    <p className='text-[#04594D] text-base'>{article.description}</p>
+                                </div>
+                            }
+                        </NewsCards>
+                    ))}
+                </NewsContainer>
+                <div className='justify-items-center p-5'>
+                    <PaginationPage/>
+                </div>
+            </div>
+        </>
     );
 }
 

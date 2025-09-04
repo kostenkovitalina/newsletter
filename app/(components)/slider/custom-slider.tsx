@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./custom-slider.css";
 
 interface CustomCarouselProps {
@@ -7,95 +8,33 @@ interface CustomCarouselProps {
 }
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({ children }) => {
-    const [activeIndex, setActiveIndex] = useState<number>(0);
-    const [slideDone, setSlideDone] = useState<boolean>(true);
-    const [timeID, setTimeID] = useState<ReturnType<typeof setTimeout> | null>(null);
+    const [curr, setCurr] = useState(0);
+    const total = children.length;
 
-    useEffect(() => {
-        if (slideDone) {
-            setSlideDone(false);
-            setTimeID(
-                setTimeout(() => {
-                    slideNext();
-                    setSlideDone(true);
-                }, 5000)
-            );
-        }
-        // Очистка таймауту при unmount
-        return () => {
-            if (timeID) clearTimeout(timeID);
-        };
-    }, [slideDone]);
-
-    const slideNext = (): void => {
-        setActiveIndex((val) => (val >= children.length - 1 ? 0 : val + 1));
-    };
-
-    const slidePrev = (): void => {
-        setActiveIndex((val) => (val <= 0 ? children.length - 1 : val - 1));
-    };
-
-    const AutoPlayStop = (): void => {
-        if (timeID) {
-            clearTimeout(timeID);
-            setSlideDone(false);
-        }
-    };
-
-    const AutoPlayStart = (): void => {
-        if (!slideDone) setSlideDone(true);
-    };
+    const prev = () => setCurr(curr => (curr === 0 ? total - 1 : curr - 1));
+    const next = () => setCurr(curr => (curr === total - 1 ? 0 : curr + 1));
 
     return (
-        <div
-            className="container__slider"
-            onMouseEnter={AutoPlayStop}
-            onMouseLeave={AutoPlayStart}
-        >
-            {children.map((item, index) => (
-                <div
-                    className={"slider__item slider__item-active-" + (activeIndex + 1)}
-                    key={index}
-                >
-                    {item}
-                </div>
-            ))}
-
-            <div className="container__slider__links">
-                {children.map((_, index) => (
-                    <button
-                        key={index}
-                        className={
-                            activeIndex === index
-                                ? "container__slider__links-small container__slider__links-small-active"
-                                : "container__slider__links-small"
-                        }
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setActiveIndex(index);
-                        }}
-                    ></button>
+        <div className='overflow-hidden relative w-full'>
+            <div
+                className='flex transition-transform ease-out duration-500'
+                style={{ transform: `translateX(-${curr * 100}%)` }}
+            >
+                {children.map((child, idx) => (
+                    <div key={idx} className="w-full flex-shrink-0">
+                        {child}
+                    </div>
                 ))}
             </div>
 
-            <button
-                className="slider__btn-next"
-                onClick={(e) => {
-                    e.preventDefault();
-                    slideNext();
-                }}
-            >
-                {">"}
-            </button>
-            <button
-                className="slider__btn-prev"
-                onClick={(e) => {
-                    e.preventDefault();
-                    slidePrev();
-                }}
-            >
-                {"<"}
-            </button>
+            <div className='absolute inset-0 flex items-center justify-between px-4'>
+                <button onClick={prev} className='p-2 bg-white rounded-full shadow'>
+                    <ChevronLeft size={24} />
+                </button>
+                <button onClick={next} className='p-2 bg-white rounded-full shadow'>
+                    <ChevronRight size={24} />
+                </button>
+            </div>
         </div>
     );
 };

@@ -4,7 +4,7 @@ import {Navbar} from "@/app/(marketing)/navbar";
 import {Category} from "@/constants/categories";
 
 type Props = {
-    onCategoryChange: (category: Category) => void;
+    onCategoryChange?: (category: Category) => void;
 }
 
 export const Header = ({onCategoryChange}: Props) => {
@@ -22,7 +22,9 @@ export const Header = ({onCategoryChange}: Props) => {
                 <div
                     className='-mt-6'
                     data-testid="navbar">
-                    <Navbar onCategoryChange={onCategoryChange}/>
+                    {onCategoryChange && (
+                        <Navbar onCategoryChange={onCategoryChange} />
+                    )}
                 </div>
             </div>
         </header>

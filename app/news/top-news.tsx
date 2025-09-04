@@ -11,7 +11,7 @@ type ModeType = CategoryType & SortedType
 export const TopNews: React.FC<ModeType> = ({selectedCategory, sortBy}) => {
     const articles = useSortedNews(sortBy, selectedCategory)
 
-    const imageSlider = articles.filter(article => article.urlToImage).slice(10, 15);
+    const imageSlider = articles.filter(article => article.urlToImage).slice(3, 8);
     const first = articles[0];
     const second = articles[1];
     const third = articles[2];

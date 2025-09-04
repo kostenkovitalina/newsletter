@@ -3,6 +3,7 @@ import React from 'react';
 import useNews from "@/hooks/useNews";
 import {CategoryType} from "@/type/category-type";
 import {ArticleType} from "@/type/article-type";
+import {NewsCards} from "@/app/(components)/news-cards/news-cards";
 
 const News: React.FC<CategoryType> = ({selectedCategory}) => {
     const articles = useNews(selectedCategory);
@@ -36,7 +37,7 @@ const News: React.FC<CategoryType> = ({selectedCategory}) => {
                 <div className="flex-[3] min-w-0">
                     <div className='grid grid-cols-2 gap-4'>
                         {result.map((article, index) => (
-                            <div key={index} className="relative w-[390px] h-[340px]">
+                            <NewsCards key={index} className="relative w-[390px] h-[340px]">
                                 {article.urlToImage && (
                                     <img
                                         src={article.urlToImage}
@@ -50,7 +51,7 @@ const News: React.FC<CategoryType> = ({selectedCategory}) => {
                                     </h3>
                                     <p style={{fontSize: 10, color: "white"}}>{article.author}</p>
                                 </div>
-                            </div>
+                            </NewsCards>
                         ))}
                     </div>
                 </div>
