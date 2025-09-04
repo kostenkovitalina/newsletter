@@ -43,15 +43,14 @@ const News: React.FC<CategoryType> = ({selectedCategory}) => {
                                             </>
 
                                         ) :
-                                        <NewsCards className='absolute bg-white font-semibold p-2'>
+                                        <div className='bg-white font-semibold p-2 h-[340px]'>
                                             <h2 className='text-xl'>{article.title}</h2>
                                             <div className='flex gap-4'>
                                                 <p className='text-xs'>{article.author}</p>
                                                 <NewsPublisher publishedAt={article.publishedAt}/>
                                             </div>
-                                            <br/>
                                             <p className='text-blue-600 text-base'>{article.description}</p>
-                                        </NewsCards>
+                                        </div>
                                     }
                                 </NewsCards>
                             ))}
