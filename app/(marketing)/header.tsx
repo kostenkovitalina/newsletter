@@ -17,11 +17,15 @@ export const Header = ({onCategoryChange}: Props) => {
                         <DropDownMenu
                             label='NEWSLETTER'
                             labelClassName='text-4xl font-extrabold text-white tracking-wide ml-1 sm:ml-6'
-                            items={['My Account', 'My News', 'Weather', 'Save News', 'Settings', 'Log Out']}
+                            items={[
+                                {label: 'My Account', href: '/account'},
+                                {label: 'My News', href: '/my-news'},
+                                {label: 'Weather', href: '/weather'},
+                                {label: 'Save News', href: '/saved'},
+                                {label: 'Settings', href: '/settings'},
+                                {label: 'Log Out', href: '/logout'}
+                            ]}
                         />
-                        {/*<h1 className='text-4xl font-extrabold text-white tracking-wide ml-1 sm:ml-6'>*/}
-                        {/*    NEWSLETTER*/}
-                        {/*</h1>*/}
                     </div>
                     <SearchBar/>
                 </div>
