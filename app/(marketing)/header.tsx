@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import {SearchBar} from "@/app/(marketing)/search-bar";
 import {Navbar} from "@/app/(marketing)/navbar";

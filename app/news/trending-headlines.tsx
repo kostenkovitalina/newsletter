@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import {SortedType} from "@/type/sorted-type";
 import {NewsPublisher} from "@/app/(components)/news-publisher/news-publisher";
