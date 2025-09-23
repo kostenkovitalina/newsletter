@@ -1,27 +1,28 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Link from 'next/link';
 
 type MenuItem = {
-    label: string;
-    href: string;
+    label: ReactNode,
+    href?: string,
 };
 
 type DropDownMenuProps = {
-    label: string;
-    labelClassName?: string;
-    items: MenuItem[];
+    label: string | ReactNode,
+    labelClassName?: string,
+    onClick?: () => void
+    items: MenuItem[],
 };
 
-export const DropDownMenu = ({label, items, labelClassName}: DropDownMenuProps) => {
+export const DropDownMenu = ({label, items, labelClassName, onClick}: DropDownMenuProps) => {
     const [open, setOpen] = useState(false)
 
     return (
         <div className='relative inline-block'>
             <div className='flex'>
                 <div className='relative text-left'>
-                <span className={labelClassName}>
+                <span className={labelClassName} onClick={onClick}>
                     {label}
                 </span>
                 </div>
@@ -34,21 +35,30 @@ export const DropDownMenu = ({label, items, labelClassName}: DropDownMenuProps) 
             </div>
 
             {open && (
-                <div className='absolute let-0 bg-white ml-6 shadow-lg flex flex-col justify-end z-50'>
-                    <ul className='flex flex-col'>
-                        {items.map((item, index) => (
-                            <Link
-                                key={index}
-                                href={item.href}
-                                className='block px-20 py-2 hover:bg-[#04594D] hover:text-white transition-colors'
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
+                <div className="absolute left-0 bg-white ml-6 shadow-lg flex flex-col justify-end z-50">
+                    <ul className="flex flex-col">
+                        {items.map((item, index) => {
+                            if (item.href) {
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={item.href}
+                                        className="block px-20 py-2 hover:bg-[#04594D] hover:text-white transition-colors"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                );
+                            }
+                            return (
+                                <button key={index}  className="block w-full text-left px-20 py-2 hover:bg-[#04594D] hover:text-white transition-colors">
+                                    {item.label}
+                                </button>
+                            );
+                        })}
                     </ul>
                 </div>
-            )
-            }
+            )}
+
         </div>
     );
 };

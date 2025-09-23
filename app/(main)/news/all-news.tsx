@@ -1,12 +1,12 @@
 'use client'
 import React, {useState} from 'react';
-import News from "@/app/news/news";
-import {TopNews} from "@/app/news/top-news";
+import News from "@/app/(main)/news/news";
+import {TopNews} from "@/app/(main)/news/top-news";
 import {Header} from "@/app/(marketing)/header";
-import {TrendingHeadlines} from "@/app/news/trending-headlines";
+import {TrendingHeadlines} from "@/app/(main)/news/trending-headlines";
 import {Category} from "@/constants/categories";
 
-export const NewsPage = () => {
+export const AllNews = () => {
     const [selectedCategory, setSelectedCategory] = useState('general' as Category);
 
     return (

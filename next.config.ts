@@ -1,13 +1,6 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-    images: {
-        domains: [
-            'www.ft.com',
-            'd1e00ek4ebabms.cloudfront.net',
-            'media.formula1.com',
-        ],
+module.exports = {
+    reactStrictMode: true,
+    experimental: {
+        forceSwcTransforms: true,
     },
-};
-
-export default nextConfig;
+}

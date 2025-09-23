@@ -1,5 +1,5 @@
 import {render, screen} from "@testing-library/react";
-import News from "@/app/news/news";
+import News from "@/app/(main)/news/news";
 import '@testing-library/jest-dom';
 import useNews from "@/hooks/useNews";
 
