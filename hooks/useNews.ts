@@ -1,20 +1,17 @@
 'use client'
-import {useEffect, useState} from "react";
-import {Category} from "@/constants/categories";
-import {ArticleType} from "@/type/article-type";
+import { useEffect, useState } from "react";
+import { Category } from "@/constants/categories";
+import { ArticleType } from "@/type/article-type";
 
 const useNews = (category: Category = 'general') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
 
-    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY
-
     useEffect(() => {
         const controller = new AbortController();
-        const fetchNews = async () => {
-            const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${NEWS_API_KEY}`;
 
+        const fetchNews = async () => {
             try {
-                const res = await fetch(url, {signal: controller.signal});
+                const res = await fetch(`/api/news?category=${category}`, { signal: controller.signal });
                 const data = await res.json();
                 setArticles(data.articles || []);
             } catch (err: any) {
@@ -25,12 +22,10 @@ const useNews = (category: Category = 'general') => {
 
         fetchNews();
 
-        return () => {
-            controller.abort();
-        };
+        return () => controller.abort();
     }, [category]);
 
-    return articles
+    return articles;
 }
 
-export default useNews
+export default useNews;

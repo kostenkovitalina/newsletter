@@ -1,36 +1,29 @@
 'use client'
-import {useEffect, useState} from "react";
-import {ArticleType} from "@/type/article-type";
-import {SortBy} from "@/constants/sortBy";
+import { useEffect, useState } from "react";
+import { ArticleType } from "@/type/article-type";
+import { SortBy } from "@/constants/sortBy";
 
 const useTrendingHeadlineNews = (sortBy: SortBy = 'publishedAt') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
 
-    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY
-
     useEffect(() => {
         const controller = new AbortController();
-        const fetchNews = async () => {
-            const url = `https://newsapi.org/v2/everything?q=bitcoin&sortBy=${sortBy}&apiKey=${NEWS_API_KEY}`;
 
+        const fetchNews = async () => {
             try {
-                const res = await fetch(url, {signal: controller.signal});
+                const res = await fetch(`/api/news?query=bitcoin&sortBy=${sortBy}`, { signal: controller.signal });
                 const data = await res.json();
                 setArticles(data.articles || []);
             } catch (err: any) {
-                if (err.name === 'AbortError') return;
-                console.error('Fetch error:', err);
+                if (err.name !== 'AbortError') console.error(err);
             }
         };
 
         fetchNews();
-
-        return () => {
-            controller.abort();
-        };
+        return () => controller.abort();
     }, [sortBy]);
 
-    return articles
-}
+    return articles;
+};
 
-export default useTrendingHeadlineNews
+export default useTrendingHeadlineNews;
