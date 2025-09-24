@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const sortBy = req.nextUrl.searchParams.get('sortBy') || '';
     const page = req.nextUrl.searchParams.get('page') || '1';
 
-    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY; // серверний ключ, НЕ публічний
+    const NEWS_API_KEY = process.env.NEXT_API_KEY; // серверний ключ, НЕ публічний
 
     let url = '';
 
