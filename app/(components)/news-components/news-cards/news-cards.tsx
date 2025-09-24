@@ -7,7 +7,7 @@ type Props = {
 
 export const NewsCards = ({children, className}: Props) => {
     return (
-        <div className={`w-[390px] h-[340px] ${className}`}>
+        <div className={`max-w-[390px] max-h-[340px]: ${className}`}>
             {children}
         </div>
     );

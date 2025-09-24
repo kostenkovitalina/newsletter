@@ -3,12 +3,13 @@ import {DropDownMenu} from "@/app/(components)/drop-down/drop-dawn-menu";
 import Link from 'next/link';
 
 export const HeaderMenu = () => {
+
     return (
         <div>
             <DropDownMenu
                 label={
                     <button>
-                        <Link href={`/`}>
+                        <Link href={`/public`}>
                             NEWSLETTER
                         </Link>
                     </button>

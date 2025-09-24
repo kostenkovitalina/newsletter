@@ -1,9 +1,9 @@
 'use client'
 import React from 'react';
-import {Header} from "@/app/(marketing)/header";
-import {NewsContainer} from "@/app/(components)/container/news-container";
-import {NewsCards} from "@/app/(components)/news-cards/news-cards";
-import {NewsPublisher} from "@/app/(components)/news-publisher/news-publisher";
+import {Header} from "@/app/(marketing)/header/header";
+import {NewsContainer} from "@/app/(components)/news-components/container/news-container";
+import {NewsCards} from "@/app/(components)/news-components/news-cards/news-cards";
+import {NewsPublisher} from "@/app/(components)/news-components/news-publisher/news-publisher";
 import useTrendingHeadlineNews from "@/hooks/useTrendingHeadlineNews";
 
 const Page = () => {
