@@ -6,11 +6,7 @@ export async function GET(req: NextRequest) {
     const sortBy = req.nextUrl.searchParams.get('sortBy') || '';
     const page = req.nextUrl.searchParams.get('page') || '1';
 
-    const NEWS_API_KEY = process.env.NEWS_API_KEY;
-    if (!NEWS_API_KEY) {
-        console.error('NEWS_API_KEY missing!');
-        return NextResponse.json({ message: 'Server key missing' }, { status: 500 });
-    }
+    const NEWS_API_KEY = process.env.NEXT_PUBLIC_API_KEY; // серверний ключ, НЕ публічний
 
     let url = '';
 
