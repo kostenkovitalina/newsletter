@@ -1,8 +1,11 @@
 import React from 'react';
 import {ArticleType} from "@/type/article-type";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store";
+import {newsActions} from "@/store/news-slice";
+
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import usePersisterState from "@/hooks/usePersisterState";
 
 type NewsModalProps = {
     article: ArticleType,
@@ -10,16 +13,17 @@ type NewsModalProps = {
 }
 
 export const NewsModal = ({article, onClose}: NewsModalProps) => {
-    const [savedArticles, setSavedArticles] = usePersisterState<ArticleType[]>('saveArticles', [])
+    const dispatch = useDispatch();
+
+    const savedArticles = useSelector((state: RootState) => state.news.savedNews);
 
     const isSave = savedArticles.some(a => a.url === article.url)
 
     const onClickSave = () => {
-        setSavedArticles([...savedArticles, article]);
+        dispatch(newsActions.saveNews(article));
     }
-
     const onClickDelete = () => {
-        setSavedArticles(savedArticles.filter(a => a.url !== article.url))
+        dispatch(newsActions.removeSaveNews(article.url));
     }
 
     const imgNone = 'public/placeholder/general-img-landscape.png'
