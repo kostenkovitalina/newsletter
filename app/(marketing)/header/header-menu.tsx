@@ -9,7 +9,7 @@ export const HeaderMenu = () => {
             <DropDownMenu
                 label={
                     <button>
-                        <Link href={`/public`}>
+                        <Link href={`/`}>
                             NEWSLETTER
                         </Link>
                     </button>

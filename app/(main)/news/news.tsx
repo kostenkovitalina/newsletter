@@ -1,15 +1,14 @@
 'use client'
-import React, {useState} from 'react';
+import React from 'react';
 import useNews from "@/hooks/useNews";
 import {CategoryType} from "@/type/category-type";
-import {NewsCards} from "@/app/(components)/news-components/news-cards/news-cards";
-import {NewsPublisher} from "@/app/(components)/news-components/news-publisher/news-publisher";
-import {ArticleType} from '@/type/article-type';
-import {NewsModal} from "@/app/(components)/news-components/news-modal/news-modal";
 import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
+import {Loading} from "@/app/(components)/loading/loading";
 
 const News: React.FC<CategoryType> = ({selectedCategory}) => {
-    const articles = useNews(selectedCategory)
+    const {articles, loading} = useNews(selectedCategory)
+
+    if (loading) return <Loading/>
 
     return (
         <>
@@ -21,9 +20,10 @@ const News: React.FC<CategoryType> = ({selectedCategory}) => {
                 <div className='hidden md:block p-2'>
                     <hr/>
                 </div>
+
                 <div className="flex gap-8 mt-[20px]">
                     <div className="flex-[3]">
-                        <NewsList articles={articles} layout='grid'/>
+                        <NewsList articles={articles} layout='grid' col={2}/>
                     </div>
                 </div>
             </div>

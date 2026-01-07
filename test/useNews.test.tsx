@@ -31,7 +31,7 @@ describe('useNews', () => {
         const { result } = renderHook(() => useNews(category));
 
         await waitFor(() => {
-            expect(result.current.length).toBeGreaterThan(0);
+            expect(result.current.selectedArticle).toBeGreaterThan(0);
         });
 
         expect(mockFetch).toHaveBeenCalledWith(

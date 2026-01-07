@@ -6,11 +6,14 @@ import Link from 'next/link';
 import {ArticleType} from "@/type/article-type";
 import {NewsModal} from "@/app/(components)/news-components/news-modal/news-modal";
 import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
+import {Loading} from "@/app/(components)/loading/loading";
 
 export const TrendingHeadlines: React.FC<SortedType> = ({sortBy}) => {
-    const articles = useTrendingHeadlineNews(sortBy)
+    const {articles, loading} = useTrendingHeadlineNews(sortBy)
 
     const [selectedArticle, setSelectedArticle] = useState<ArticleType | null>(null)
+
+    if (loading) return <Loading/>
 
     const ContentLargeScreen = () => (
         <div className='w-[410px] mx-auto bg-white mt-[50px] flex flex-col font-serif'>
@@ -32,7 +35,7 @@ export const TrendingHeadlines: React.FC<SortedType> = ({sortBy}) => {
 
     const ContentSmallScreen = () => (
         <>
-            <NewsList articles={articles} layout='grid'/>
+            <NewsList articles={articles} layout='grid' col={2}/>
             {selectedArticle && (
                 <NewsModal article={selectedArticle} onClose={() => setSelectedArticle(null)}/>
             )}

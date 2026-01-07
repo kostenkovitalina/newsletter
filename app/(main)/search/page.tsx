@@ -8,6 +8,7 @@ import {NewsCards} from '@/app/(components)/news-components/news-cards/news-card
 import {NewsContainer} from '@/app/(components)/news-components/container/news-container';
 import {NewsPublisher} from '@/app/(components)/news-components/news-publisher/news-publisher';
 import {Loading} from "@/app/(components)/loading/loading";
+import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
 
 const Page = () => {
     const {news, query, loading, error, page, totalResult} = useSearch();
@@ -23,44 +24,13 @@ const Page = () => {
                 <h1 className="text-2xl pt-10 pl-6">Search Results '{query}'</h1>
 
                 <div className='justify-items-center p-5'>
-                    <PaginationPage/>
+                    <PaginationPage page={page} query={query} totalResults={totalResult} />
                 </div>
 
-                <NewsContainer className="grid grid-cols-3 gap-3 p-6 justify-items-center">
-                    {news.map((article: any) => (
-                        <NewsCards key={article.url} className="relative mb-5 w-full h-64 overflow-hidden shadow">
-                            {article.urlToImage ? (
-                                <>
-                                    <img
-                                        src={article.urlToImage}
-                                        alt={article.title}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div
-                                        className='absolute top-0 left-0 right-0 hover:bg-black hover:bg-opacity-60 text-white p-3'>
-                                        <h2 className="text-lg line-clamp-2">{article.title}</h2>
-                                        <div className='flex flex-col gap-2'>
-                                            <p className='text-xs'>{article.author}</p>
-                                            <NewsPublisher publishedAt={article.publishedAt}/>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className='bg-[#F3F2EA] p-3 h-[340px]'>
-                                    <h2 className='text-xl'>{article.title}</h2>
-                                    <div className='flex flex-col gap-2'>
-                                        <p className='text-xs'>{article.author}</p>
-                                        <NewsPublisher publishedAt={article.publishedAt}/>
-                                    </div>
-                                    <p className='text-[#04594D] text-base mt-2'>{article.description}</p>
-                                </div>
-                            )}
-                        </NewsCards>
-                    ))}
-                </NewsContainer>
+                <NewsList articles={news} layout='grid' col={3}/>
 
                 <div className='justify-items-center p-5'>
-                    <PaginationPage/>
+                    <PaginationPage page={page} totalResults={totalResult} query={query}/>
                 </div>
             </div>
         </>

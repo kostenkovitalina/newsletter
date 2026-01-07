@@ -18,6 +18,8 @@ type DropDownMenuProps = {
 export const DropDownMenu = ({label, items, labelClassName, onClick}: DropDownMenuProps) => {
     const [open, setOpen] = useState(false)
 
+    console.log(items)
+
     return (
         <div className='relative inline-block'>
             <div className='flex'>
@@ -50,7 +52,8 @@ export const DropDownMenu = ({label, items, labelClassName, onClick}: DropDownMe
                                 );
                             }
                             return (
-                                <button key={index}  className="block w-full text-left px-20 py-2 hover:bg-[#04594D] hover:text-white transition-colors">
+                                <button key={index}
+                                        className="block w-full text-left px-20 py-2 hover:bg-[#04594D] hover:text-white transition-colors">
                                     {item.label}
                                 </button>
                             );

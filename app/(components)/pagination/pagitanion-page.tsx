@@ -1,25 +1,28 @@
-'use client'
 import {useRouter} from "next/navigation";
-import {useSearch} from "@/hooks/useSearch";
 import {Pagination} from "@mui/material";
 import React from "react";
 
-export const PaginationPage = () => {
-    const router = useRouter()
-    const {page, totalResult, query} = useSearch()
+type PaginationPageProps = {
+    page: number,
+    pageSize?: number,
+    totalResults?: number,
+    query?: string,
+    onPageChange?: (newPage: number) => void
+};
 
-    const pageSize = 20
-    const maxResults = 100
-    const pageCount = Math.ceil(Math.min(totalResult, maxResults) / pageSize)
+export const PaginationPage = ({page, pageSize = 20, totalResults = 0, query,}: PaginationPageProps) => {
+    const router = useRouter();
+
+    const maxResults = 100;
+    const pageCount = Math.ceil(Math.min(totalResults, maxResults) / (pageSize));
+
+    if (pageCount === 0) return null
 
     return (
-        <>
-            <Pagination
-                count={pageCount}
-                color="primary"
-                page={Number(page)}
-                onChange={(event, page) => router.push(`/search?query=${encodeURIComponent(query)}&page=${page}`)}
-            />
-        </>
-    )
-}
+        <Pagination
+            count={pageCount}
+            color="primary"
+            page={page}
+            onChange={(event, page) => router.push(`/search?query=${encodeURIComponent(query || '')}&page=${page}`)}/>
+    );
+};
