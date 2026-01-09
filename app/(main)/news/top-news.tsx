@@ -5,16 +5,19 @@ import CustomSlider from "@/app/(components)/slider/custom-slider";
 import {CategoryType} from "@/type/category-type";
 import {SortedType} from "@/type/sorted-type";
 import useSortedNews from "@/hooks/useSortedNews";
+import {Loading} from "@/app/(components)/loading/loading";
 
 type ModeType = CategoryType & SortedType
 
 export const TopNews: React.FC<ModeType> = ({selectedCategory, sortBy}) => {
-    const articles = useSortedNews(sortBy, selectedCategory)
+    const {articles, loading} = useSortedNews(sortBy, selectedCategory)
 
     const imageSlider = articles.filter(article => article.urlToImage).slice(3, 8);
     const first = articles[0];
     const second = articles[1];
     const third = articles[2];
+
+    if (loading) return <Loading/>
 
     return (
         <div

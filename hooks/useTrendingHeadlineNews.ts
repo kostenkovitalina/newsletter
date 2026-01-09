@@ -1,21 +1,27 @@
 'use client'
-import { useEffect, useState } from "react";
-import { ArticleType } from "@/type/article-type";
-import { SortBy } from "@/constants/sortBy";
+import {useEffect, useReducer, useState} from "react";
+import {ArticleType} from "@/type/article-type";
+import {SortBy} from "@/constants/sortBy";
+import {initialState, newsReducer} from "@/store/newsReducer";
 
 const useTrendingHeadlineNews = (sortBy: SortBy = 'publishedAt') => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
+    const [state, dispatch] = useReducer(newsReducer, initialState);
 
     useEffect(() => {
         const controller = new AbortController();
 
         const fetchNews = async () => {
+            dispatch({type: 'START'});
             try {
-                const res = await fetch(`/api/news?query=bitcoin&sortBy=${sortBy}`, { signal: controller.signal });
+                const res = await fetch(`/api/news?query=bitcoin&sortBy=${sortBy}`, {signal: controller.signal});
                 const data = await res.json();
                 setArticles(data.articles || []);
+                dispatch({type: 'SUCCESS'})
             } catch (err: any) {
-                if (err.name !== 'AbortError') console.error(err);
+                if (err.name !== 'AbortError') dispatch({type: 'ERROR', payload: err});
+            } finally {
+                dispatch({type: 'FINISHED'});
             }
         };
 
@@ -23,7 +29,7 @@ const useTrendingHeadlineNews = (sortBy: SortBy = 'publishedAt') => {
         return () => controller.abort();
     }, [sortBy]);
 
-    return articles;
+    return {...state, articles};
 };
 
 export default useTrendingHeadlineNews;

@@ -1,13 +1,12 @@
 import React from "react";
 import {ArticleType} from "@/type/article-type";
 
-type Props = {
-    className?: string
-}
+type NewsPublisherProps = {
+    publishedAt?: string;
+    className?: string;
+};
 
-type Mode = ArticleType & Props
-
-export const NewsPublisher: React.FC<Mode> = ({ publishedAt, className }) => {
+export const NewsPublisher: React.FC<NewsPublisherProps> = ({ publishedAt, className }) => {
     if (!publishedAt) return null;
 
     const date = new Date(publishedAt);

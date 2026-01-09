@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import React, {Suspense} from 'react';
 import "./globals.css";
 import {Loading} from "@/app/(components)/loading/loading";
+import {ReduxProvider} from "@/app/providers";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -14,9 +15,11 @@ export default function RootLayout({children}: Readonly<{
     return (
         <html lang="en">
         <body>
-        <Suspense fallback={<Loading/>}>
-            {children}
-        </Suspense>
+        <ReduxProvider>
+            <Suspense fallback={<Loading/>}>
+                {children}
+            </Suspense>
+        </ReduxProvider>
         </body>
         </html>
     );
