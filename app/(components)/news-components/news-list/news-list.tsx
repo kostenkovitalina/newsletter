@@ -1,9 +1,9 @@
 'use client'
 import {ArticleType} from '@/type/article-type';
 import React, {useState} from 'react';
-import {NewsCards} from '../news-cards/news-cards';
-import {NewsPublisher} from '../news-publisher/news-publisher';
-import {NewsModal} from "@/app/(components)/news-components/news-modal/news-modal";
+import {NewsCards} from '../articles-cards/articles-cards';
+import {NewsPublisher} from '../articles-publisher/articles-publisher';
+import {NewsModal} from "@/app/(components)/articles-components/articles-modal/articles-modal";
 
 type NewsListProps = {
     articles: ArticleType[],
@@ -66,7 +66,7 @@ export const NewsList = ({articles, layout, col, limit}: NewsListProps) => {
                 <div key={index} className='flex mb-4'>
                     <img
                         src={article.urlToImage || imgNone}
-                        alt='news image'
+                        alt='articles image'
                         width={140}
                         height={120}
                     />

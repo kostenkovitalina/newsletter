@@ -11,11 +11,11 @@ import {Loading} from "@/app/(components)/loading/loading";
 import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
 
 const Page = () => {
-    const {news, query, loading, error, page, totalResult} = useSearch();
+    const {articles: articles, query, loading, error, page, totalResults} = useSearch();
 
     if (loading) return <Loading/>
     if (error) return <p className="text-center mt-10">Error: {error}</p>;
-    if (news.length === 0) return <p className="text-center mt-10">No results found "{query}".</p>;
+    if (articles.length === 0) return <p className="text-center mt-10">No results found "{query}".</p>;
 
     return (
         <>
@@ -24,13 +24,13 @@ const Page = () => {
                 <h1 className="text-2xl pt-10 pl-6">Search Results '{query}'</h1>
 
                 <div className='justify-items-center p-5'>
-                    <PaginationPage page={page} query={query} totalResults={totalResult} />
+                    <PaginationPage page={page} query={query} totalResults={totalResults} />
                 </div>
 
-                <NewsList articles={news} layout='grid' col={3}/>
+                <NewsList articles={articles} layout='grid' col={3}/>
 
                 <div className='justify-items-center p-5'>
-                    <PaginationPage page={page} totalResults={totalResult} query={query}/>
+                    <PaginationPage page={page} totalResults={totalResults} query={query}/>
                 </div>
             </div>
         </>
