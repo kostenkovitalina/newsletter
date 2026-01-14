@@ -2,7 +2,7 @@ import React from 'react';
 import {ArticleType} from "@/type/article-type";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store";
-import {newsActions} from "@/store/news-slice";
+import {newsActions} from "@/store/news.slice";
 
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
@@ -13,17 +13,34 @@ type NewsModalProps = {
 }
 
 export const NewsModal = ({article, onClose}: NewsModalProps) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    const savedArticles = useSelector((state: RootState) => state.news.savedNews);
+    const savedArticles = useSelector((state: RootState) => state.news.savedNews)
 
     const isSave = savedArticles.some(a => a.url === article.url)
 
-    const onClickSave = () => {
-        dispatch(newsActions.saveNews(article));
+
+    const onClickSave = async () => {
+        dispatch(newsActions.saveNews(article))
+
+        await fetch('app/api/save-news/route.ts', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                articleId: article.id,
+            })
+        })
     }
-    const onClickDelete = () => {
-        dispatch(newsActions.removeSaveNews(article.url));
+    const onClickDelete = async () => {
+        dispatch(newsActions.removeSaveNews(article.url))
+
+        await fetch('app/api/delete-news/route.ts', {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                articleId: article.id,
+            })
+        })
     }
 
     const imgNone = 'public/placeholder/general-img-landscape.png'

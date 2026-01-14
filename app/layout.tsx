@@ -3,6 +3,7 @@ import React, {Suspense} from 'react';
 import "./globals.css";
 import {Loading} from "@/app/(components)/loading/loading";
 import {ReduxProvider} from "@/app/providers";
+import {ClerkProvider} from "@clerk/nextjs";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -15,11 +16,13 @@ export default function RootLayout({children}: Readonly<{
     return (
         <html lang="en">
         <body>
-        <ReduxProvider>
-            <Suspense fallback={<Loading/>}>
-                {children}
-            </Suspense>
-        </ReduxProvider>
+        <ClerkProvider>
+            <ReduxProvider>
+                <Suspense fallback={<Loading/>}>
+                    {children}
+                </Suspense>
+            </ReduxProvider>
+        </ClerkProvider>
         </body>
         </html>
     );

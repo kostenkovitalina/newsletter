@@ -1,53 +1,31 @@
 'use client'
-import {useEffect, useReducer, useState} from "react";
-import {ArticleType} from "@/type/article-type";
-import {initialState, newsReducer} from "@/store/newsReducer";
+import {useEffect} from "react";
 import {useSearchParams} from "next/navigation";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store";
+import {searchNews} from "@/store/search.thunks";
+import {newsActions} from "@/store/news.slice";
 
 export const useSearch = () => {
-    const [news, setNews] = useState<ArticleType[]>([]);
-    const [totalResult, setTotalResult] = useState(0);
-    const [query, setQuery] = useState('');
-    const [page, setPage] = useState(1);
+    const dispatch = useDispatch<AppDispatch>()
+    const {loading, error, page, query, articles, totalResults} = useSelector((state: RootState) => state.news)
 
-    const [state, dispatch] = useReducer(newsReducer, initialState);
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        setQuery(searchParams.get('query') || '');
-        setPage(Number(searchParams.get('page') || '1'));
-    }, [searchParams]);
+        const queryParam = searchParams.get('query') || '';
+        const pageParam = Number(searchParams.get('page') || '1');
+
+        dispatch(newsActions.setQuery(queryParam));
+        dispatch(newsActions.setPage(pageParam));
+    }, [searchParams, dispatch]);
 
     useEffect(() => {
-        if (!query) {
-            setNews([]);
-            setTotalResult(0);
-            return;
+        if (query) {
+            dispatch(searchNews({ query, page }));
         }
+    }, [query, page, dispatch]);
 
-        const controller = new AbortController();
 
-        const searchNews = async () => {
-            dispatch({type: 'START'});
-            try {
-                const res = await fetch(`/api/news?query=${query}&page=${page}`, {signal: controller.signal});
-                const data = await res.json();
-                setNews(data.articles || []);
-                setTotalResult(data.totalResults || 0);
-                if (!res.ok || data.status === 'error') {
-                    dispatch({type: 'ERROR', payload: data.message || 'Error fetching data'});
-                }
-                dispatch({type: 'SUCCESS'})
-            } catch (err: any) {
-                if (err.name !== 'AbortError') dispatch({type: 'ERROR', payload: err});
-            } finally {
-                dispatch({type: 'FINISHED'});
-            }
-        };
-
-        searchNews();
-        return () => controller.abort();
-    }, [query, page]);
-
-    return {...state, news, query, page, totalResult};
+    return { articles, loading, error, query, page, totalResults }
 };

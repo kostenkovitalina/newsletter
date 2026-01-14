@@ -1,37 +1,26 @@
 'use client'
-import {useEffect, useReducer, useState} from "react";
 import {Category} from "@/constants/categories";
-import {ArticleType} from "@/type/article-type";
-import {initialState, newsReducer} from "@/store/newsReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store";
+import {fetchNews} from "@/store/news.thunks";
+import {useEffect} from "react";
 
 const useNews = (category: Category = 'general') => {
-    const [articles, setArticles] = useState<ArticleType[]>([]);
-    const [state, dispatch] = useReducer(newsReducer, initialState);
+    const dispatch = useDispatch<AppDispatch>()
+
+    const {articles, loading, error, page, savedNews} = useSelector((state: RootState) => state.news)
 
     useEffect(() => {
-        const controller = new AbortController();
+        dispatch(fetchNews({category, page}))
+    }, [dispatch, page, category])
 
-        const fetchNews = async () => {
-            dispatch({type: 'START'});
-            try {
-                const res = await fetch(`/api/news?category=${category}`, {signal: controller.signal});
-                const data = await res.json();
-                setArticles(data.articles || []);
-                dispatch({type: 'SUCCESS', payload: {totalResult: data.totalResults || data.articles.length}})
-
-            } catch (err: any) {
-                if (err.name !== 'AbortError') dispatch({type: 'ERROR', payload: err});
-            } finally {
-                dispatch({type: 'FINISHED'});
-            }
-        };
-
-        fetchNews();
-
-        return () => controller.abort();
-    }, [category]);
-
-    return {...state, articles, dispatch};
+    return {
+        articles,
+        loading,
+        error,
+        page,
+        savedNews,
+    }
 }
 
 export default useNews;
