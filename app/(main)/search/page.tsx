@@ -4,9 +4,6 @@ import React from 'react';
 import {useSearch} from '@/hooks/useSearch';
 import {Header} from '@/app/(marketing)/header/header';
 import {PaginationPage} from '@/app/(components)/pagination/pagitanion-page';
-import {NewsCards} from '@/app/(components)/news-components/news-cards/news-cards';
-import {NewsContainer} from '@/app/(components)/news-components/container/news-container';
-import {NewsPublisher} from '@/app/(components)/news-components/news-publisher/news-publisher';
 import {Loading} from "@/app/(components)/loading/loading";
 import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
 

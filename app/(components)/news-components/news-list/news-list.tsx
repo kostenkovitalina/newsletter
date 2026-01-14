@@ -1,9 +1,10 @@
 'use client'
 import {ArticleType} from '@/type/article-type';
 import React, {useState} from 'react';
-import {NewsCards} from '../articles-cards/articles-cards';
-import {NewsPublisher} from '../articles-publisher/articles-publisher';
-import {NewsModal} from "@/app/(components)/articles-components/articles-modal/articles-modal";
+import { NewsPublisher } from '../news-publisher/news-publisher';
+import { NewsCards } from '../news-cards/news-cards';
+import {NewsModal} from "@/app/(components)/news-components/news-modal/news-modal";
+
 
 type NewsListProps = {
     articles: ArticleType[],
