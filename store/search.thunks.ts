@@ -1,22 +1,22 @@
-import {createAsyncThunk} from '@reduxjs/toolkit'
-import {ArticleType} from "@/type/article-type";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-type SearchNewsArgs = {
-    query: string,
-    page: number,
-}
+export const searchNews = createAsyncThunk(
+    'news/searchNews',
+    async ({ query, page }: { query: string; page: number }, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`/api/news?query=${query}&page=${page}`);
+            const data = await res.json();
 
-type SearchNewsResponse = {
-    articles: ArticleType[]
-}
+            if (!res.ok) {
+                return rejectWithValue(data.message);
+            }
 
-export const searchNews = createAsyncThunk<SearchNewsResponse, SearchNewsArgs>('news/searchNews',
-    async ({query, page}, thunkAPI) => {
-        const res = await fetch(`/api/news?query=${query}&page=${page}`)
-        const data = await res.json()
-
-        return {
-            articles: data.articles,
+            return {
+                articles: data.articles || [],
+                totalResults: data.totalResults || 0,
+            };
+        } catch (error) {
+            return rejectWithValue('Failed to fetch news');
         }
     }
-)
+);

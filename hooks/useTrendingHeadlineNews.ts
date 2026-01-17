@@ -8,7 +8,9 @@ import {fetchTrendingHeadlines} from "@/store/trendingHeadlineNews.thunks";
 const useTrendingHeadlineNews = (sortBy: SortBy = 'publishedAt') => {
     const dispatch = useDispatch<AppDispatch>()
 
-    const {articles, loading, error} = useSelector((state: RootState) => state.news)
+    const articles = useSelector((state: RootState) => state.news.trendingNews)
+
+    const {loading, error} = useSelector((state: RootState) => state.news)
 
     useEffect(() => {
         dispatch(fetchTrendingHeadlines({sortBy}))

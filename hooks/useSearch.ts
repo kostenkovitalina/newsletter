@@ -1,31 +1,35 @@
 'use client'
-import {useEffect} from "react";
-import {useSearchParams} from "next/navigation";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store";
-import {searchNews} from "@/store/search.thunks";
-import {newsActions} from "@/store/news.slice";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
+import { searchNews } from "@/store/search.thunks";
+import { newsActions } from "@/store/news.slice";
 
 export const useSearch = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const {loading, error, page, query, articles, totalResults} = useSelector((state: RootState) => state.news)
-
+    const dispatch = useDispatch<AppDispatch>();
     const searchParams = useSearchParams();
 
-    useEffect(() => {
-        const queryParam = searchParams.get('query') || '';
-        const pageParam = Number(searchParams.get('page') || '1');
+    const { searchResults, loading, error, totalResults } = useSelector((state: RootState) => state.news);
 
-        dispatch(newsActions.setQuery(queryParam));
-        dispatch(newsActions.setPage(pageParam));
-    }, [searchParams, dispatch]);
+    const urlQuery = searchParams.get('query') || '';
+    const urlPage = Number(searchParams.get('page') || '1');
 
     useEffect(() => {
-        if (query) {
-            dispatch(searchNews({ query, page }));
+        dispatch(newsActions.setQuery(urlQuery));
+        dispatch(newsActions.setPage(urlPage));
+
+        if (urlQuery) {
+            dispatch(searchNews({ query: urlQuery, page: urlPage }));
         }
-    }, [query, page, dispatch]);
+    }, [urlQuery, urlPage, dispatch])
 
-
-    return { articles, loading, error, query, page, totalResults }
+    return {
+        articles: searchResults,
+        loading,
+        error,
+        query: urlQuery,
+        page: urlPage,
+        totalResults
+    };
 };

@@ -6,6 +6,7 @@ import {newsActions} from "@/store/news.slice";
 
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import {newsService} from "@/services/news.service";
 
 type NewsModalProps = {
     article: ArticleType,
@@ -23,24 +24,12 @@ export const NewsModal = ({article, onClose}: NewsModalProps) => {
     const onClickSave = async () => {
         dispatch(newsActions.saveNews(article))
 
-        await fetch('app/api/save-news/route.ts', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                articleId: article.id,
-            })
-        })
+        await newsService.saveNews(article.id)
     }
     const onClickDelete = async () => {
         dispatch(newsActions.removeSaveNews(article.url))
 
-        await fetch('app/api/delete-news/route.ts', {
-            method: 'DELETE',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                articleId: article.id,
-            })
-        })
+        await newsService.deleteNews(article.id)
     }
 
     const imgNone = 'public/placeholder/general-img-landscape.png'

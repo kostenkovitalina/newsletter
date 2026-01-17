@@ -8,7 +8,11 @@ import {useEffect} from "react";
 const useNews = (category: Category = 'general') => {
     const dispatch = useDispatch<AppDispatch>()
 
-    const {articles, loading, error, page, savedNews} = useSelector((state: RootState) => state.news)
+    const {page, savedNews, loading, error} = useSelector((state: RootState) => state.news)
+
+    const articles = useSelector((state: RootState) => state.news.generalNews)
+    // const loading = useSelector((state: RootState) => state.news.loading)
+    // const error = useSelector((state: RootState) => state.news.error)
 
     useEffect(() => {
         dispatch(fetchNews({category, page}))

@@ -1,12 +1,9 @@
 'use client';
 
-// import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {newsActions} from "@/store/news.slice";
 import {RootState} from "@/store";
-import {getItem} from "@/utils/localStorage";
-import dynamic from "next/dynamic";
 import {NewsList} from "@/app/(components)/news-components/news-list/news-list";
 
 

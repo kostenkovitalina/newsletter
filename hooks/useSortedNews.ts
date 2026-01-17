@@ -9,7 +9,8 @@ import {sortedNews} from "@/store/sorted.thunks";
 const useSortedNews = (sortBy: SortBy = 'popularity', category: Category = 'general') => {
     const dispatch = useDispatch<AppDispatch>()
 
-    const {articles, loading, error} = useSelector((state: RootState) => state.news)
+    const articles = useSelector((state: RootState) => state.news.sortedNews)
+    const {loading, error} = useSelector((state: RootState) => state.news)
 
     useEffect(() => {
         dispatch(sortedNews({sortBy, category}))
